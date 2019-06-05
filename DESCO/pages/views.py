@@ -1,6 +1,9 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+#Decoradores 
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse, reverse_lazy
 from .forms import PageForm
 from .models import Page
@@ -9,9 +12,9 @@ class StaffRequiredMixin(object):
     """
     Este mixin requerirá que el usuario sea miembro del staff
     """
+    #Decorador para requerir el logueo y accesar a una página
+    @method_decorator(staff_member_required)
     def dispatch(self, request, *args, **kwargs):
-        if not request.user_is_staff:
-            return redirect(reverse_lazy('admin:login'))
         return super(StaffRequiredMixin, self).dispatch(request, *args, **kwargs)
     
 
