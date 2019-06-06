@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Prioridad
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,9 +129,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#Estilos de Ckeditor en html
 CKEDITOR_CONFIGS = {
     'default': {
         'width'  : 'auto',
         'height' : 'auto'
     }
 }
+
+#Auth Redirect
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+#Servidor SMTP de prueba
+if DEBUG:
+    EMAIL_BACKEND = "django.core.email.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+else:
+    #Aqui hay que configurar un email real para producción
+    pass

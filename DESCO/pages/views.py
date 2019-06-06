@@ -24,12 +24,13 @@ class PageListView(ListView):
 
 class PageDetailView(DetailView):
     model = Page
-
+@method_decorator(staff_member_required, name = 'dispatch')
 class PageCreate(StaffRequiredMixin,CreateView):
     model = Page
     form_class = PageForm
     success_url = reverse_lazy('pages:pages')
 
+@method_decorator(staff_member_required, name = 'dispatch')
 class PageUpdate(StaffRequiredMixin,UpdateView):
     model = Page
     form_class = PageForm
@@ -37,6 +38,7 @@ class PageUpdate(StaffRequiredMixin,UpdateView):
     def get_success_url(self):
         return reverse_lazy('pages:update', args = [self.object.id]) + '?ok'
 
+@method_decorator(staff_member_required, name = 'dispatch')
 class PageDelete(StaffRequiredMixin,DeleteView):
     model = Page
     success_url = reverse_lazy('pages:pages')
